@@ -24,11 +24,18 @@ Restart your terminal and check if it works
 
 # Usage
 Optionally provide a limit (default is 20) of rows read & returned from the dataframe.
-```bash
-vqvd <qvd file>
-vqvd -h
-vqvd <qvd file> -c 20 -r 100 -w 20
-vqvd -m
+```
+vqvd [OPTIONS] <PATH>
+
+Arguments:
+  <PATH>
+
+Options:
+  -r, --max-rows <MAX_ROWS>        [default: 20]
+  -w, --cell-width <CELL_WIDTH>    [default: 30]
+  -c, --max-columns <MAX_COLUMNS>  [default: 10]
+  -m, --metadata
+  -h, --help                       Print help
 ```
 
 # Notes
