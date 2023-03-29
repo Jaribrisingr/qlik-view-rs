@@ -1,88 +1,35 @@
 # Read Qlik Sense .qvd files 🛠
-[![CI pipeline](https://github.com/SBentley/qvd-utils/actions/workflows/CI.yml/badge.svg)](https://github.com/SBentley/qvd-utils/actions/workflows/CI.yml)
 
-A python library for reading Qlik Sense .qvd file format, written in Rust.
-Files can be read to DataFrame or dictionary.
+This is a fork of the python library to read qvd's in python but modified to be a binary executable.
 
-## Install
+Original repo: https://github.com/SBentley/qvd-utils
 
-Install from PyPi https://pypi.org/project/qvd/
 
-```sh
-pip install qvd
+# Install
+## The binary route (MacOS)
+I didn't upload a binary to the repo, thus having rust installed is required for this.
+```bash
+# Rust can be installed with the following command
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustc --version
 ```
 
-## Usage
+```bash
+git clone <this repo>
+cd qlik-view-rs
+cargo build --release
+mv ./target/release/vqvd /usr/local/bin # or another dir but then you have to add that dir in your /etc/paths which requires admin permissions
+```
+Restart your terminal and check if it works
 
-```python
-from qvd import qvd_reader
-
-df = qvd_reader.read('test.qvd')
-print(df)
+# Usage
+Optionally provide a limit (default is 20) of rows read & returned from the dataframe.
+```bash
+vqvd <qvd file>
+vqvd -h
+vqvd <qvd file> -c 20 -r 100 -w 20
+vqvd -m
 ```
 
-![example](https://raw.githubusercontent.com/SBentley/qvd-utils/master/example.png)
-
-### Developing
-
-Create a virtual env https://docs.python-guide.org/dev/virtualenvs/ and activate it.
-
-```sh
-python3 -m venv venv
-```
-
-Then install dev dependencies:
-
-```sh
-pip install pandas maturin
-```
-
-Afterwards, run 
-
-```sh
-maturin develop --release
-```
-
-to install the generated python lib to the virtual env.
-
-## Test
-
-To run the tests, you can use these commands:
-
-```sh
-cargo test  # runs all Rust unit tests
-pytest test_qvd_reader.py  # runs all Python tests
-```
-
-## QVD File Structure
-
-A QVD file is split into 3 parts; XML Metdata, Symbols table and the bit
-stuffed binary indexes.
-
-### XML Metadata
-
-This section is at the top of the file and is in human readable XML. This
-section contains metadata about the file in gneneral such as table name, number
-of records, size of records as well as data about individual fields including
-field name, length offset in symbol table.
-
-### Symbol table
-
-Directly after the xml section is the symbol table. This is a table of every
-unique value contained within each column. The columns are in the order
-described in the metadata fields section. In the metadata we can find the byte
-offset from the start of the symbols section for each column. Symbol types
-cannot be determined from the metadata and are instead determined by a flag
-byte preceding each symbol. These types are:
-
-* 1 - 4 byte signed int (u32) - little endiand
-* 2 - 8 byte signed float (f64) - little endian
-* 4 - null terminated string
-* 5 - 4 bytes of junk follwed by a null terminated string representing an integer
-* 6 - 8 bytes of junk followed by a null terminated string representing a float
-
-### Binary Indexes
-
-After the symbol table are the binary indexes that map to the symbols for each
-row. They are bit stuffed and reversed binary numbers that point to the index
-of the symbol in the symbols table for each field.
+# Notes
+Feel free to improve and extend 
