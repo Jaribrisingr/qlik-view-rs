@@ -9,13 +9,14 @@ repository = "https://github.com/Jaribrisingr/qlik-view-rs"
 keywords = ["cli", "rust", "qlik", "sense", "qvd"]
 
 
-[[lib]]
+[[bin]]
 name = "vqvd"
 path = "src/main.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 serde = { version = "1.0.117", features = ["derive"] }
-quick-xml = { version = "0.20.0", features = ["serialize"] }
+quick-xml = { version = "0.28.1", features = ["serialize"] }
 bitvec = "0.19.4"
-clap = { version = "0.27.2", features = ["derive"] }
+clap = { version = "4.1.14", features = ["derive"] }
+polars = "0.27.2"
