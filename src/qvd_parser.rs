@@ -37,7 +37,7 @@ pub fn read_qvd(args: Arguments) {
                 get_symbols_as_strings(&buf, field),
             );
             let symbol_indexes = get_row_indexes(rows_section, field, record_byte_size);
-            let column_values = match_symbols_with_indexes(&symbol_map[&field.field_name], &symbol_indexes);
+            let column_values = match_symbols_with_indexes(&symbol_map[&field.field_name], &symbol_indexes, args.max_rows);
             Data {
                 column: field.field_name.clone(),
                 values: column_values,
@@ -72,13 +72,15 @@ fn read_qvd_to_buf(mut f: File, binary_section_offset: usize) -> Vec<u8> {
     buf
 }
 
-fn match_symbols_with_indexes(symbols: &[Option<String>], pointers: &[i64]) -> Vec<Option<String>> {
-    let mut cols: Vec<Option<String>> = Vec::new();
+fn match_symbols_with_indexes(symbols: &[Option<String>], pointers: &[i64], limit: usize) -> Vec<Option<String>> {
+    let mut cols: Vec<Option<String>> = Vec::with_capacity(limit);
     for pointer in pointers.iter() {
-        if symbols.is_empty() || *pointer < 0 {
-            cols.push(None);
-        } else {
-            cols.push(symbols[*pointer as usize].clone());
+        if cols.len() < cols.capacity() {
+            if symbols.is_empty() || *pointer < 0 {
+                cols.push(None);
+            } else {
+                cols.push(symbols[*pointer as usize].clone());
+            }
         }
     }
     cols
