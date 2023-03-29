@@ -18,5 +18,7 @@ fn configure_the_environment(args: &Arguments) {
     env::set_var("POLARS_FMT_MAX_COLS", format!("{}", args.max_columns));
     env::set_var("POLARS_FMT_MAX_ROWS",  format!("{}", args.max_rows));
     env::set_var("POLARS_FMT_STR_LEN", format!("{}", args.cell_width));
+    env::set_var("POLARS_FMT_TABLE_HIDE_COLUMN_DATA_TYPES", "1");
+    env::set_var("POLARS_FMT_TABLE_HIDE_DATAFRAME_SHAPE_INFORMATION", "1");
 }
 

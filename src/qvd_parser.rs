@@ -45,7 +45,7 @@ pub fn read_qvd(args: Arguments) {
         }).collect();
         
         let df: DataFrame = create_dataframe(data);
-        println!("{:?}", df);
+        println!("{}", df);
     }
 }
 
@@ -61,7 +61,7 @@ pub fn read_qvd_metadata(args: Arguments) {
     let xml: String = get_xml_data(&args.path).expect("Error reading file");
     let qvd_structure: QvdTableHeader = from_str(&xml).unwrap();
 
-    println!("todo");
+    println!("{}", qvd_structure);
 }
 
 fn read_qvd_to_buf(mut f: File, binary_section_offset: usize) -> Vec<u8> {
