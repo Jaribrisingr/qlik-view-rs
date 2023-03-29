@@ -1,28 +1,21 @@
 [package]
-name = "qvd"
-version = "0.0.14"
-authors = ["Sam Bentley <samtbentley@gmail.com>"]
-edition = "2018"
+name = "vqvd"
+version = "0.0.1"
+edition = "2021"
 readme = "README.md"
-description = "A library for reading Qlik Sense .qvd file format from Python, written in Rust."
+description = "A library for reading Qlik Sense .qvd file format from the cli, written in Rust."
 license = "Apache-2.0"
-repository = "https://github.com/SBentley/qvd-utils"
-keywords = ["python", "rust", "qlik", "sense", "qvd"]
+repository = "https://github.com/Jaribrisingr/qlik-view-rs"
+keywords = ["cli", "rust", "qlik", "sense", "qvd"]
 
 
-[lib]
-name = "qvd"
-crate-type = ["cdylib"]
+[[lib]]
+name = "vqvd"
+path = "src/main.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 serde = { version = "1.0.117", features = ["derive"] }
-quick-xml = { version = "0.20.0", features = ["serialize"]}
+quick-xml = { version = "0.20.0", features = ["serialize"] }
 bitvec = "0.19.4"
-
-[dependencies.pyo3]
-version = "0.12.3"
-features = ["extension-module"]
-
-[package.metadata.maturin]
-requires-dist = ["pandas>=1.1.4"]
+clap = { version = "0.27.2", features = ["derive"] }
